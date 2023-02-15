@@ -1,0 +1,24 @@
+{% extends 'uit_app/base.html' %}
+
+
+{% block content %}
+<div class="container my-5">
+  <h3>Just For You</h3>
+  <div class="row">
+      {% for c in products %}
+      <div class="col-6 col-md-4 col-lg-2 d-flex align-items-stretch">
+          <div class="card">
+            <h6>{{c.id}}</h6>
+              <img src="{{ c.image.url }}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h6 class="card-title">{{ c.title }}</h6>
+                <p class="card-text">{{ c.description|truncatechars_html:50 }}</p>
+                
+              </div>
+            </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+{% endblock content %}
+    

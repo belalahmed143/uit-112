@@ -1,0 +1,31 @@
+th{
+    color: red;
+}
+td{
+    background-color: black;
+    color: white;
+    padding: 30px;
+}
+table{
+    margin: 50px;
+}
+
+.cname{
+    font-size: 100px;
+}
+
+#idname{
+    font-size: 200px;
+}
+
+.row>*{
+    padding-right: calc(var(--bs-gutter-x) * .2) !important;
+    padding-left: calc(var(--bs-gutter-x) * .2) !important;
+}
+.card:hover{
+    box-shadow: 2px 2px 2px 2px #e8e1e1;
+}
+
+.text{
+    text-align: center;
+}

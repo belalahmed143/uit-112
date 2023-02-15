@@ -1,0 +1,49 @@
+{% extends 'uit_app/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://evazu.com/media/bannerImg/Order-from-our-Website.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://icms-image.slatic.net/images/ims-web/ba922689-66bf-4768-a474-ecb7736792ad.jpg_1200x1200.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://icms-image.slatic.net/images/ims-web/bc8e092a-f9f6-469e-b6ff-d4a6950b6376.jpg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+</div>
+
+<div class="container my-5">
+    <h3>Just For You</h3>
+    <div class="row">
+        {% for c in products %}
+        <div class="col-6 col-md-4 col-lg-2 d-flex align-items-stretch">
+            <div class="card">
+              <h6>{{c.id}}</h6>
+                <img src="{{ c.image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h6 class="card-title">{{ c.title }}</h6>
+                  <p class="card-text">{{ c.description|truncatechars_html:50 }}</p>
+                  
+                </div>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+
+
+
