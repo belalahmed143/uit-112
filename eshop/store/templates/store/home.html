@@ -350,18 +350,16 @@
                     }
                 }
             }'>
+            
+            {% for c in products %}
             <div class="product d-flex flex-column overflow-hidden">
                 <figure class="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
                     <span class="product-label label-sale">SALE</span>
-                    <a href="product.html" class="w-100">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-1.jpg' %}" alt="Product image" class="product-image" width="239" height="239">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-1-2.jpg' %}" alt="Product image" class="product-image-hover" width="239"
+                    <a href="{% url 'product-detail' c.pk %}" class="w-100">
+                        <img src="{{c.image.url}}" alt="Product image" class="product-image" width="239" height="239">
+                        <img src="{{ c.image.url }}" alt="Product image" class="product-image-hover" width="239"
                             height="239">
                     </a>
-
-                    <div class="product-countdown bg-light" data-until="+55h" data-relative="true" data-labels-short="true"></div>
-                    <!-- End .product-countdown -->
-
                     <div class="product-action-vertical">
                         <a href="#" class="btn-product-icon text-dark btn-wishlist" title="Add to wishlist">
                             <span>add to wishlist</span>
@@ -378,16 +376,23 @@
 
                 <div class="product-body pb-3">
                     <div class="text-left product-cat font-weight-normal text-light mb-0">
-                        <a href="#">Furniture</a>
+                        <a href="#">{{ c.category.name }}</a>
                     </div>
                     <!-- End .product-cat  -->
                     <h3 class="product-title letter-spacing-normal font-size-normal text-left mb-0">
-                        <a href="product.html">Butler Stool Ladder</a>
+                        <a href="product.html">{{ c.name }}</a>
                     </h3>
                     <!-- End .product-title letter-spacing-normal font-size-normal -->
                     <div class="product-price mb-1">
-                        <div class="new-price">$251.99</div>
-                        <div class="old-price font-size-normal font-weight-normal">$290.00</div>
+                        
+                        {% if c.discount_price %}
+                        <div class="new-price">${{ c.discount_price }}</div>
+                        <div class="old-price font-size-normal font-weight-normal">${{ c.price }}</div>
+                        {% else %}
+                        <div class="new-price">${{ c.price }}</div>
+                        {% endif %}
+                            
+
                     </div>
                     <!-- End .product-price -->
                     <div class="ratings-container">
@@ -399,355 +404,10 @@
                         <span class="ratings-text ml-2"> ( 2 Reviews )</span>
                     </div>
                 </div>
-                <div class="product-action position-relative visible">
-                    <a href="#" class="btn-product btn-cart text-uppercase text-dark text-decoration-none" title="Add to cart">
-                        <span class="text-dark shadow-none">add to cart</span>
-                    </a>
-                </div>
-                <div class="product-sold">
-                    <div class="sold position-relative w-100">
-                        <div class="sold-val position-absolute" style="width: 80%;"></div>
-                        <span class="sold-text font-size-normal second-primary-color">Sold: 54</span>
-                    </div>
-                </div>
             </div>
             <!-- End .product -->
-
-            <div class="product d-flex flex-column overflow-hidden">
-                <figure class="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
-                    <a href="product.html" class="w-100">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-2.jpg' %}" alt="Product image" class="product-image" width="239" height="239">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-2-2.jpg' %}" alt="Product image" class="product-image-hover" width="239"
-                            height="239">
-                    </a>
-
-                    <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon text-dark btn-wishlist" title="Add to wishlist">
-                            <span>add to wishlist</span>
-                        </a>
-                        <a href="popup/quickView.html" class="btn-product-icon text-dark btn-quickview" title="Quick view">
-                            <span>Quick view</span>
-                        </a>
-                        <a href="#" class="btn-product-icon text-dark btn-compare" title="Compare">
-                            <span>Compare</span>
-                        </a>
-                    </div>
-                </figure>
-                <!-- End .product-media bg-white d-flex justify-content-center align-items-center -->
-
-                <div class="product-body pb-3">
-                    <div class="product-cat font-weight-normal text-left text-light mb-0">
-                        <a href="#">Electronics</a>
-                    </div>
-                    <!-- End .product-cat  -->
-                    <h3 class="product-title letter-spacing-normal font-size-normal text-left mb-0">
-                        <a href="product.html">Bose - SoundSport wireless headphones</a>
-                    </h3>
-                    <!-- End .product-title letter-spacing-normal font-size-normal -->
-                    <div class="product-price mb-1">
-                        <div class="new-price">$179.99</div>
-                        <div class="old-price font-size-normal font-weight-normal">$190.00</div>
-                    </div>
-                    <!-- End .product-price -->
-                    <div class="ratings-container">
-                        <div class="ratings">
-                            <div class="ratings-val" style="width: 100%;"></div>
-                            <!-- End .ratings-val -->
-                        </div>
-                        <!-- End .ratings -->
-                        <span class="ratings-text ml-2"> ( 2 Reviews )</span>
-                    </div>
-                    <!-- End .rating-container -->
-                    <div class="product-nav product-nav-dots">
-                        <a href="#" class="active" style="background: #69b4ff;">
-                            <span class="sr-only">Color name</span>
-                        </a>
-                        <a href="#" style="background: #ff887f;">
-                            <span class="sr-only">Color name</span>
-                        </a>
-                        <a href="#" style="background: #333333;">
-                            <span class="sr-only">Color name</span>
-                        </a>
-                    </div>
-                </div>
-                <!-- End .product-body -->
-                <div class="product-action position-relative visible">
-                    <a href="#" class="btn-product btn-cart text-uppercase text-dark text-decoration-none" title="Add to cart">
-                        <span class="text-dark shadow-none">add to cart</span>
-                    </a>
-                </div>
-                <div class="product-sold">
-                    <div class="sold position-relative w-100">
-                        <div class="sold-val position-absolute" style="width: 80%;"></div>
-                        <span class="sold-text font-size-normal second-primary-color">Sold: 54</span>
-                    </div>
-                </div>
-            </div>
-            <!-- End .product -->
-
-            <div class="product d-flex flex-column overflow-hidden">
-                <figure class="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
-                    <span class="product-label label-new">New</span>
-                    <a href="product.html" class="w-100">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-21.jpg' %}" alt="Product image" class="product-image" width="239" height="239">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-21-2.jpg' %}" alt="Product image" class="product-image-hover" width="239"
-                            height="239">
-                    </a>
-
-                    <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon text-dark btn-wishlist" title="Add to wishlist">
-                            <span>add to wishlist</span>
-                        </a>
-                        <a href="popup/quickView.html" class="btn-product-icon text-dark btn-quickview" title="Quick view">
-                            <span>Quick view</span>
-                        </a>
-                        <a href="#" class="btn-product-icon text-dark btn-compare" title="Compare">
-                            <span>Compare</span>
-                        </a>
-                    </div>
-                </figure>
-                <!-- End .product-media bg-white d-flex justify-content-center align-items-center -->
-
-                <div class="product-body pb-3">
-                    <div class="product-cat font-weight-normal text-left text-light mb-0">
-                        <a href="#">Cooking Appliances</a>
-                    </div>
-                    <!-- End .product-cat  -->
-                    <h3 class="product-title letter-spacing-normal font-size-normal text-left mb-0">
-                        <a href="product.html">KitchenAid - KSB1570WH Classic 5 - Speed Blender</a>
-                    </h3>
-                    <!-- End .product-title letter-spacing-normal font-size-normal -->
-                    <div class="product-price mb-1">
-                        <div class="new-price">$74.00</div>
-                        <div class="old-price font-size-normal font-weight-normal">$90.00</div>
-                    </div>
-                    <!-- End .product-price -->
-                    <div class="ratings-container">
-                        <div class="ratings">
-                            <div class="ratings-val" style="width: 60%;"></div>
-                            <!-- End .ratings-val -->
-                        </div>
-                        <!-- End .ratings -->
-                        <span class="ratings-text ml-2"> ( 4 Reviews )</span>
-                    </div>
-                    <!-- End .rating-container -->
-
-                    <div class="product-nav product-nav-dots">
-                        <a href="#" class="active" style="background: #f1f1f1;">
-                            <span class="sr-only">Color name</span>
-                        </a>
-                        <a href="#" style="background: #c00b1b;">
-                            <span class="sr-only">Color name</span>
-                        </a>
-                    </div>
-                    <!-- End .product-nav -->
-                </div>
-                <!-- End .product-body -->
-                <div class="product-action position-relative visible">
-                    <a href="#" class="btn-product btn-cart text-uppercase btn-select text-dark text-decoration-none" title="Add to cart">
-                        <span class="text-dark shadow-none">Select Options</span>
-                    </a>
-                </div>
-                <!-- End .product-action -->
-                <div class="product-sold">
-                    <div class="sold position-relative w-100">
-                        <div class="sold-val position-absolute" style="width: 80%;"></div>
-                        <span class="sold-text font-size-normal second-primary-color">Sold: 54</span>
-                    </div>
-                </div>
-            </div>
-            <!-- End .product -->
-
-            <div class="product d-flex flex-column overflow-hidden">
-                <figure class="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
-                    <span class="product-label label-top">Top</span>
-                    <span class="product-label label-sale">Sale</span>
-                    <a href="product.html" class="w-100">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-5.jpg' %}" alt="Product image" class="product-image" width="239" height="239">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-5-2.jpg' %}" alt="Product image" class="product-image-hover" width="239"
-                            height="239">
-                    </a>
-
-                    <div class="product-countdown bg-light" data-until="+55h" data-relative="true" data-labels-short="true"></div>
-                    <!-- End .product-countdown -->
-
-                    <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon text-dark btn-wishlist" title="Add to wishlist">
-                            <span>add to wishlist</span>
-                        </a>
-                        <a href="popup/quickView.html" class="btn-product-icon text-dark btn-quickview" title="Quick view">
-                            <span>Quick view</span>
-                        </a>
-                        <a href="#" class="btn-product-icon text-dark btn-compare" title="Compare">
-                            <span>Compare</span>
-                        </a>
-                    </div>
-                </figure>
-                <!-- End .product-media bg-white d-flex justify-content-center align-items-center -->
-
-                <div class="product-body pb-3">
-                    <div class="product-cat font-weight-normal text-left text-light mb-0">
-                        <a href="#">Electronics</a>
-                    </div>
-                    <!-- End .product-cat  -->
-                    <h3 class="product-title letter-spacing-normal font-size-normal text-left mb-0">
-                        <a href="product.html">Sony - 49" Class LED X900F Series 2160p Smart - 4K Ultra HD</a>
-                    </h3>
-                    <!-- End .product-title letter-spacing-normal font-size-normal -->
-                    <div class="product-price mb-1">
-                        <div class="new-price">$779.99</div>
-                        <div class="old-price font-size-normal font-weight-normal">$990.00</div>
-                    </div>
-                    <!-- End .product-price -->
-                    <div class="ratings-container">
-                        <div class="ratings">
-                            <div class="ratings-val" style="width: 80%;"></div>
-                            <!-- End .ratings-val -->
-                        </div>
-                        <!-- End .ratings -->
-                        <span class="ratings-text ml-2"> ( 10 Reviews )</span>
-                    </div>
-                </div>
-                <div class="product-action position-relative visible">
-                    <a href="#" class="btn-product btn-cart text-uppercase btn-select text-dark text-decoration-none" title="Add to cart">
-                        <span class="text-dark shadow-none">Select Options</span>
-                    </a>
-                </div>
-                <!-- End .product-action -->
-                <div class="product-sold">
-                    <div class="sold position-relative w-100">
-                        <div class="sold-val position-absolute" style="width: 80%;"></div>
-                        <span class="sold-text font-size-normal second-primary-color">Sold: 54</span>
-                    </div>
-                </div>
-            </div>
-            <!-- End .product -->
-
-            <div class="product d-flex flex-column overflow-hidden">
-                <figure class="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
-                    <span class="product-label label-top">Top</span>
-                    <a href="product.html" class="w-100">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-22.jpg' %}" alt="Product image" class="product-image" width="239" height="239">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-22-2.jpg' %}" alt="Product image" class="product-image-hover" width="239"
-                            height="239">
-                    </a>
-
-                    <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon text-dark btn-wishlist" title="Add to wishlist">
-                            <span>add to wishlist</span>
-                        </a>
-                        <a href="popup/quickView.html" class="btn-product-icon text-dark btn-quickview" title="Quick view">
-                            <span>Quick view</span>
-                        </a>
-                        <a href="#" class="btn-product-icon text-dark btn-compare" title="Compare">
-                            <span>Compare</span>
-                        </a>
-                    </div>
-                </figure>
-                <!-- End .product-media bg-white d-flex justify-content-center align-items-center -->
-
-                <div class="product-body pb-3">
-                    <div class="product-cat font-weight-normal text-left text-light mb-0">
-                        <a href="#">Electronics</a>
-                    </div>
-                    <!-- End .product-cat  -->
-                    <h3 class="product-title letter-spacing-normal font-size-normal text-left mb-0">
-                        <a href="product.html">Beats by Dr. Dre Wireless Headphones</a>
-                    </h3>
-                    <!-- End .product-title letter-spacing-normal font-size-normal -->
-                    <div class="product-price mb-1">
-                        <div class="new-price">$282.99</div>
-                        <div class="old-price font-size-normal font-weight-normal">$349.99</div>
-                    </div>
-                    <!-- End .product-price -->
-                    <div class="ratings-container">
-                        <div class="ratings">
-                            <div class="ratings-val" style="width: 100%;"></div>
-                            <!-- End .ratings-val -->
-                        </div>
-                        <!-- End .ratings -->
-                        <span class="ratings-text ml-2"> ( 5 Reviews )</span>
-                    </div>
-                    <!-- End .rating-container -->
-                </div>
-                <!-- End .product-body -->
-                <div class="product-action position-relative visible">
-                    <a href="#" class="btn-product btn-cart text-uppercase btn-select text-dark text-decoration-none" title="Add to cart">
-                        <span class="text-dark shadow-none">Select Options</span>
-                    </a>
-                </div>
-                <!-- End .product-action -->
-                <div class="product-sold">
-                    <div class="sold position-relative w-100">
-                        <div class="sold-val position-absolute" style="width: 80%;"></div>
-                        <span class="sold-text font-size-normal second-primary-color">Sold: 54</span>
-                    </div>
-                </div>
-            </div>
-            <!-- End .product -->
-
-            <div class="product d-flex flex-column overflow-hidden">
-                <figure class="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
-                    <span class="product-label label-top">Top</span>
-                    <a href="product.html" class="w-100">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-22.jpg' %}" alt="Product image" class="product-image" width="239" height="239">
-                        <img src="{% static 'store/images/demos/demo-26/products/product-22-2.jpg' %}" alt="Product image" class="product-image-hover" width="239"
-                            height="239">
-                    </a>
-
-                    <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon text-dark btn-wishlist" title="Add to wishlist">
-                            <span>add to wishlist</span>
-                        </a>
-                        <a href="popup/quickView.html" class="btn-product-icon text-dark btn-quickview" title="Quick view">
-                            <span>Quick view</span>
-                        </a>
-                        <a href="#" class="btn-product-icon text-dark btn-compare" title="Compare">
-                            <span>Compare</span>
-                        </a>
-                    </div>
-                </figure>
-                <!-- End .product-media bg-white d-flex justify-content-center align-items-center -->
-
-                <div class="product-body pb-3">
-                    <div class="product-cat font-weight-normal text-left text-light mb-0">
-                        <a href="#">Electronics</a>
-                    </div>
-                    <!-- End .product-cat  -->
-                    <h3 class="product-title letter-spacing-normal font-size-normal text-left mb-0">
-                        <a href="product.html">Beats by Dr. Dre Wireless Headphones</a>
-                    </h3>
-                    <!-- End .product-title letter-spacing-normal font-size-normal -->
-                    <div class="product-price mb-1">
-                        <div class="new-price">$282.99</div>
-                        <div class="old-price font-size-normal font-weight-normal">$349.99</div>
-                    </div>
-                    <!-- End .product-price -->
-                    <div class="ratings-container">
-                        <div class="ratings">
-                            <div class="ratings-val" style="width: 100%;"></div>
-                            <!-- End .ratings-val -->
-                        </div>
-                        <!-- End .ratings -->
-                        <span class="ratings-text ml-2"> ( 5 Reviews )</span>
-                    </div>
-                    <!-- End .rating-container -->
-                </div>
-                <!-- End .product-body -->
-                <div class="product-action position-relative visible">
-                    <a href="#" class="btn-product btn-cart text-uppercase text-dark text-decoration-none" title="Add to cart">
-                        <span class="text-dark shadow-none">add to cart</span>
-                    </a>
-                </div>
-                <!-- End .product-action -->
-                <div class="product-sold">
-                    <div class="sold position-relative w-100">
-                        <div class="sold-val position-absolute" style="width: 80%;"></div>
-                        <span class="sold-text font-size-normal second-primary-color">Sold: 54</span>
-                    </div>
-                </div>
-            </div>
-            <!-- End .product -->
+            {% endfor %}
+                
         </div>
     </div>
     <!-- End .container-fluid -->
