@@ -1,0 +1,77 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h3>{{ request.GET.q }}- Search Result</h3>
+        <div class="row">
+            
+            {% if products %}
+            {% for c in products %}
+            <div class="col-6 col-md-4 col-lg-3">
+                
+                <div class="product d-flex flex-column overflow-hidden">
+                    <figure class="mb-0 product-media bg-white d-flex justify-content-center align-items-center">
+                        <span class="product-label label-sale">SALE</span>
+                        <a href="{% url 'product-detail' c.pk %}" class="w-100">
+                            <img src="{{c.image.url}}" alt="Product image" class="product-image" width="239" height="239">
+                            <img src="{{ c.image.url }}" alt="Product image" class="product-image-hover" width="239"
+                                height="239">
+                        </a>
+                        <div class="product-action-vertical">
+                            <a href="#" class="btn-product-icon text-dark btn-wishlist" title="Add to wishlist">
+                                <span>add to wishlist</span>
+                            </a>
+                            <a href="popup/quickView.html" class="btn-product-icon text-dark btn-quickview" title="Quick view">
+                                <span>Quick view</span>
+                            </a>
+                            <a href="#" class="btn-product-icon text-dark btn-compare" title="Compare">
+                                <span>Compare</span>
+                            </a>
+                        </div>
+                    </figure>
+                    <!-- End .product-media bg-white d-flex justify-content-center align-items-center -->
+    
+                    <div class="product-body pb-3">
+                        <div class="text-left product-cat font-weight-normal text-light mb-0">
+                            <a href="#">{{ c.category.name }}</a>
+                        </div>
+                        <!-- End .product-cat  -->
+                        <h3 class="product-title letter-spacing-normal font-size-normal text-left mb-0">
+                            <a href="product.html">{{ c.name }}</a>
+                        </h3>
+                        <!-- End .product-title letter-spacing-normal font-size-normal -->
+                        <div class="product-price mb-1">
+                            
+                            {% if c.discount_price %}
+                            <div class="new-price">${{ c.discount_price }}</div>
+                            <div class="old-price font-size-normal font-weight-normal">${{ c.price }}</div>
+                            {% else %}
+                            <div class="new-price">${{ c.price }}</div>
+                            {% endif %}
+                                
+    
+                        </div>
+                        <!-- End .product-price -->
+                        <div class="ratings-container">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 100%;"></div>
+                                <!-- End .ratings-val -->
+                            </div>
+                            <!-- End .ratings -->
+                            <span class="ratings-text ml-2"> ( 2 Reviews )</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End .product -->
+                
+            </div>
+            {% endfor %}
+            {% else %}
+                <h4 class="text-danger">No Search Result</h4>
+            {% endif %}
+                 
+
+        </div>
+    </div>
+{% endblock content %}

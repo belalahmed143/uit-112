@@ -17,12 +17,12 @@
                             {% for c in categories %}                              
                                 {% if not c.chaild.all %}
                                 <li>
-                                    <a href="#" class="text-dark">
+                                    <a href="{% url 'category-filter' c.pk %}" class="text-dark">
                                         <i class="{{ c.icon }}"></i>{{ c.name }}</a>
                                 </li>
                                 {% else %}
                                 <li class="megamenu-container">
-                                    <a class="sf-with-ul text-dark" href="#">
+                                    <a class="sf-with-ul text-dark" href="{% url 'category-filter' c.pk %}">
                                         <i class="{{ c.icon }}"></i>{{ c.name }}</a>
                                     <div class="megamenu">
                                         <div class="row ">
@@ -35,7 +35,7 @@
                                                                 
                                                                 {% for sc in c.chaild.all %}
                                                                 <li>
-                                                                    <a href="#">{{ sc.name }}</a>
+                                                                    <a href="{% url 'category-filter' sc.pk %}">{{ sc.name }}</a>
                                                                 </li>
                                                                 {% endfor %}
                                                                     
