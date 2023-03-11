@@ -1,0 +1,18 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-5">
+                <img src="{{ user.profile.image.url }}" alt="">
+                <a class="btn btn-danger" href="{% url 'profile-update' %}">Edit</a>
+                <a href="{% url 'password-change' %}">Password Change</a>
+            </div>
+            <div class="col-md-7">
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                <p>{{ user.email }}</p>
+                <p>{{ user.profile.phone }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
