@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField 
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Banner(models.Model):
@@ -47,7 +48,43 @@ class ProductImageGallery(models.Model):
 
     def __str__(self):
         return self.product.name
+
+class CartProduct(models.Model):
+    user  = models.ForeignKey(User, on_delete=models.CASCADE)
+    product  = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity  = models.IntegerField(default=1)
+    ordered  = models.BooleanField(default=False)
     
+    class Meta:
+        verbose_name_plural = 'CartProducts'
+
+    def __str__(self):
+        return self.product.name
+
+    def get_subtotal(self):
+        if self.product.discount_price:
+            return self.product.discount_price * self.quantity
+        else:
+            return self.product.price * self.quantity
+
+class Order(models.Model):
+    user  = models.ForeignKey(User, on_delete=models.CASCADE)
+    products  = models.ManyToManyField(CartProduct)
+    ordered  = models.BooleanField(default=False)
+    ordered_date  = models.DateTimeField(blank=True, null=True)
+    payment_option  = models.CharField(max_length = 150,blank=True, null=True)
+    
+    class Meta:
+        verbose_name_plural = 'Orders'
+
+    def __str__(self):
+        return self.user.username
+
+    def get_total(self):
+        total = 0
+        for i in self.products.all():
+            total += i.get_subtotal()
+        return total
     
     
     

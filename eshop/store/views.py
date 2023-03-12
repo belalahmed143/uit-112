@@ -1,7 +1,9 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from .models import *
 from django.db.models import Q
-
+from django.contrib import messages
+from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def home(request):
@@ -47,3 +49,37 @@ def product_search(request):
         'products':products,
     }
     return render(request, 'store/search.html', context)
+
+def add_to_cart(request,pk):
+    product = get_object_or_404(Product, pk=pk)
+    cart_item, created =CartProduct.objects.get_or_create(product=product,user=request.user,ordered=False)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        if order.products.filter(product__pk=product.pk).exists():
+           cart_item.quantity += 1
+           cart_item.save()
+           messages.info(request,'this product quantity update')
+           return redirect('product-detail',pk=product.pk)
+        else:
+            order.products.add(cart_item)
+            messages.info(request,'this product was add to cart')
+            return redirect('product-detail',pk=product.pk)
+    else:
+        ordered_date = timezone.now()
+        order = Order.objects.create(user=request.user, ordered_date=ordered_date)
+        order.products.add(cart_item)
+        messages.info(request,'this product was add to cart')
+        return redirect('product-detail',pk=product.pk)
+
+def cart_summary(request):
+    try:
+        order = Order.objects.get(user=request.user, ordered=False)
+
+        context ={
+            'order':order
+        }
+        return render(request, 'store/cart-summary.html',context)
+    except ObjectDoesNotExist:
+        messages.info(request,'your cart is empty')
+        return redirect('/')
