@@ -9,7 +9,7 @@ class Banner(models.Model):
     http_link = models.URLField(max_length = 200)
 
     def __str__(self):
-        return self.title
+        return "Test /" + str(self.id)
     
 class Category(models.Model):
     name  = models.CharField(max_length = 150)
@@ -67,12 +67,24 @@ class CartProduct(models.Model):
         else:
             return self.product.price * self.quantity
 
+class Checkout(models.Model):
+    user  = models.ForeignKey(User, on_delete=models.CASCADE)
+    full_address  = models.CharField(max_length = 250)
+    phone  = models.CharField(max_length = 150)
+    email  = models.EmailField()
+    order_note  = models.TextField()
+    
+    def __str__(self):
+        return self.user.username
+
+
 class Order(models.Model):
     user  = models.ForeignKey(User, on_delete=models.CASCADE)
     products  = models.ManyToManyField(CartProduct)
     ordered  = models.BooleanField(default=False)
     ordered_date  = models.DateTimeField(blank=True, null=True)
     payment_option  = models.CharField(max_length = 150,blank=True, null=True)
+    shipping_address = models.ForeignKey(Checkout, on_delete=models.CASCADE,blank=True, null=True)
     
     class Meta:
         verbose_name_plural = 'Orders'
@@ -85,6 +97,9 @@ class Order(models.Model):
         for i in self.products.all():
             total += i.get_subtotal()
         return total
+    
+
+    
     
     
     

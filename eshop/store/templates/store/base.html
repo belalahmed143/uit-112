@@ -46,7 +46,6 @@
     <link rel="stylesheet" href="{% static 'store/css/plugins/nouislider/nouislider.css' %}">
     <link rel="stylesheet" href="{% static 'store/css/skins/skin-demo-26.css' %}">
     <link rel="stylesheet" href="{% static 'store/css/demos/demo-26.css' %}">
-
         
 </head>
 
@@ -54,12 +53,11 @@
     <div class="page-wrapper">
         {% include 'store/includes/Navbar.html' %}
         <!-- End .header -->
-        
+
         {% block content %}
             
         {% endblock content %}
             
-
 
         {% include 'store/includes/footer.html' %}
         <!-- End .footer -->
@@ -219,7 +217,31 @@
         </div>
         <!-- End .modal-dialog -->
     </div>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% if messages %}
+    <script>
     
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+            {% for message in messages %}
+            Toast.fire({
+            icon: '{{ message.tags }}',
+            title: '{{ message }}'
+            })
+            {% endfor %}
+        
+    </script>
+    {% endif %}
 
     <!-- Plugins JS File -->
     <script src="{% static 'store/js/jquery.min.js' %}"></script>
