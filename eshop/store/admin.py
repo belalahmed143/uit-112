@@ -14,3 +14,4 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product,ProductAdmin)
 admin.site.register(CartProduct)
 admin.site.register(Order)
+admin.site.register(CreateBkash)

@@ -98,7 +98,10 @@ class Order(models.Model):
             total += i.get_subtotal()
         return total
     
-
+class CreateBkash(models.Model):
+    user  = models.ForeignKey(User, on_delete=models.CASCADE)
+    paymentID  = models.CharField(max_length = 150)
+    
     
     
     

@@ -11,6 +11,10 @@ urlpatterns = [
     path('quantity_increment/<pk>', quantity_increment, name='quantity_increment'),
     path('quantity_decrement/<pk>', quantity_decrement, name='quantity_decrement'),
     path('remove_from_cart/<pk>', remove_from_cart, name='remove_from_cart'),
-    path('checkout', CheckoutView.as_view(),name='checkout')
+    path('checkout', CheckoutView.as_view(),name='checkout'),
+
+
+    path('create_bkash_payment',create_bkash_payment, name='create_bkash_payment'),
+    path('execute_baksh',execute_baksh, name='execute_baksh'),
     
 ]

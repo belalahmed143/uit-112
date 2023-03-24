@@ -1,5 +1,11 @@
 {% extends 'store/base.html' %}
 {% load crispy_forms_tags %}
+
+{% block head %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
+{% endblock head %}
+
  {% block content %}
  <main class="main">
     <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -30,7 +36,15 @@
                         <aside class="col-lg-3">
                             <div class="summary summary-cart">
                                 <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
-                                    {{ payment_method }}
+                                <li><label for="id_payment_option_0"><input type="radio" name="payment_option" value="cash on delivery" class="collapsed" required="" id="id_payment_option_0">
+                                    cash on delivery</label>
+                                   
+                                   </li>
+                                    <li><label for="bKash_button">
+                                        <input type="radio" name="payment_option" value="bkash" class="collapsed" required="" id="bKash_button">
+                                        bkash</label>
+                                       
+                                       </li>
                                 <table class="table table-summary">
                                     <tbody>
                                         <tr class="summary-total">
@@ -51,6 +65,78 @@
         </div><!-- End .cart -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
+
+
+<script>
+    // var price = document.getElementById('10').value;
+    // console.log(price);
+
+    var paymentID = '';
+    bKash.init({
+      paymentMode: 'checkout', //fixed value ‘checkout’
+      //paymentRequest format: {amount: AMOUNT, intent: INTENT}
+      //intent options
+      //1) ‘sale’ – immediate transaction (2 API calls)
+      //2) ‘authorization’ – deferred transaction (3 API calls)
+      paymentRequest: {
+        amount: '{{ order.get_total }}', //max two decimal points allowed
+        intent: 'sale'
+      },
+      createRequest: function(request) { //request object is basically the paymentRequest object, automatically pushed by the script in createRequest method
+       console.log("create working !!")
+        $.ajax({
+          url: "{% url 'create_bkash_payment' %}",
+          type: 'GET',
+          data: JSON.stringify(request),
+          contentType: 'application/json',
+          success: function(data) {
+            console.log('test')
+            console.log(data)
+            if (data && data.paymentID != null) {
+              paymentID = data.paymentID;
+              bKash.create().onSuccess(data); //pass the whole response data in bKash.create().onSucess() method as a parameter
+            } else {
+              bKash.create().onError();
+            }
+          },
+          error: function() {
+            bKash.create().onError();
+          }
+        });
+      },
+      executeRequestOnAuthorization: function() {
+        console.log("execute working !!")
+        $.ajax({
+          url: "{% url 'execute_baksh' %}",
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            "paymentID": paymentID
+          }),
+          success: function(data) {
+
+           console.log("execute response " , data)
+
+            if (data && data.paymentID != null) {
+              console.log("trxID: ",data.trxID)
+               window.location.href = '/'; // Your redirect route when successful payment
+            } else {
+                console.log("error ");
+                window.location.href = ''; // Your redirect route when fail payment
+                bKash.execute().onError();
+            }
+          },
+          error: function() {
+            bKash.execute().onError();
+          }
+        });
+      },
+      onClose: function(){
+        window.location.href='/';  // Your redirect route when cancel payment
+      },
+      });
+</script>
+ 
 
  {% endblock content %}
     

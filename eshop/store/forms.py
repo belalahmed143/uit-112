@@ -17,7 +17,7 @@ class CheckoutForm(forms.ModelForm):
 
 Payment_Method = (
     ('cash on delivery','cash on delivery'),
-    ('sslcmrz','sslcmrz'),    
+    ('bkash','bkash'),    
 )
 
 class PaymentMethodForm(forms.ModelForm):
