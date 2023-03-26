@@ -16,5 +16,8 @@ urlpatterns = [
 
     path('create_bkash_payment',create_bkash_payment, name='create_bkash_payment'),
     path('execute_baksh',execute_baksh, name='execute_baksh'),
+
+    path('order-summary', order_summary, name='order-summary'),
+    path('order-details/<pk>', order_details, name='order-details'),
     
 ]

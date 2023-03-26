@@ -344,3 +344,28 @@ def execute_baksh(request):
     order.save()
 
     return JsonResponse(response)
+
+
+
+
+@login_required
+def order_summary(request):
+    try:
+        order = Order.objects.filter(user=request.user, ordered=True)
+        context ={
+            'order':order
+        }
+        return render(request, 'store/order-summary.html',context)
+    except ObjectDoesNotExist:
+        messages.info(request,'your order is empty')
+        return redirect('/')
+
+def order_details(request,pk):
+    order = Order.objects.get(pk=pk)
+    # order_product = CartProduct.objects.all(order=order)
+
+    context ={
+            'order':order,
+
+        }
+    return render(request, 'store/order-details.html',context)

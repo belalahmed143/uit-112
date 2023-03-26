@@ -1,0 +1,47 @@
+{% extends 'store/base.html' %}
+ 
+ {% block content %}
+ <main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">Order Summary</h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <table class="table table-cart table-mobile">
+                            <thead>
+                                <tr>
+                                    <th>OrderID</th>
+                                    <th>Ordered Date</th>
+                                    <th>payment_option</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                
+                                {% for c in order %}
+                                <tr>
+                                    <td class="total-col"> <a href="{% url 'order-details' c.pk %}">{{ c.id }}</a> </td>
+                                    <td class="total-col">{{ c.ordered_date }}</td>
+                                    <td class="total-col">{{ c.payment_option }}</td>
+                                </tr>
+                                {% endfor %}
+                                    
+
+                            </tbody>
+                        </table><!-- End .table table-wishlist -->
+                    </div><!-- End .col-lg-9 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+ {% endblock content %}
+    
