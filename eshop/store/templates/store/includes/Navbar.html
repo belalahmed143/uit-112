@@ -111,20 +111,11 @@
 
             <div class="header-right">
                 <div class="header-dropdown-link">
-                    <div class="dropdown compare-dropdown">
-                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                            <div class="icon">
-                                <i class="icon-random"></i>
-                            </div>
-                            <p>Compare</p>
-                        </a>
-                    </div>
-
                     <div class="wishlist">
-                        <a href="wishlist.html" title="Wishlist">
+                        <a href="{% url 'wish_list' %}" title="Wishlist">
                             <div class="icon">
                                 <i class="icon-heart-o"></i>
-                                <span class="wishlist-count badge">3</span>
+                                <span class="wishlist-count badge">{{request.user|wish_list_product_count}}</span>
                             </div>
                             <p>Wishlist</p>
                         </a>

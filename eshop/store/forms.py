@@ -31,3 +31,8 @@ class PaymentMethodForm(forms.ModelForm):
 
 
 
+
+class BannerAddForm(forms.ModelForm):
+    class Meta:
+        model = Banner
+        fields = '__all__'

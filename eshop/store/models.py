@@ -3,6 +3,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 
 # Create your models here.
+
 class Banner(models.Model):
     title = models.CharField(max_length = 150)
     image = models.ImageField(upload_to='Banner')
@@ -101,6 +102,14 @@ class Order(models.Model):
 class CreateBkash(models.Model):
     user  = models.ForeignKey(User, on_delete=models.CASCADE)
     paymentID  = models.CharField(max_length = 150)
+
+
+class WhishLIst(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    wish_product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username + ' ' + self.wish_product.name
     
     
     

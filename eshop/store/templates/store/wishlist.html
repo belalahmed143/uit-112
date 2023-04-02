@@ -1,0 +1,73 @@
+{% extends 'store/base.html' %}
+ 
+ {% block content %}
+ <main class="main">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+        <div class="container">
+            <h1 class="page-title">WhisList</h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">WhisList</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9">
+                        <table class="table table-cart table-mobile">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                
+                                {% for c in wish_product %}
+                                <tr>
+                                    <td class="product-col">
+                                        <div class="product">
+                                            <figure class="product-media">
+                                                <a href="#">
+                                                    <img src="{{ c.wish_product.image.url }}" alt="Product image">
+                                                </a>
+                                            </figure>
+
+                                            <h3 class="product-title">
+                                                <a href="#">"{{ c.wish_product.name }}</a>
+                                            </h3><!-- End .product-title -->
+                                        </div><!-- End .product -->
+                                    </td>
+                                    
+                                    {% if c.wish_product.discount_price %}
+                                    <td class="price-col">${{ c.wish_product.discount_price }}</td>
+                                    {% else %}
+                                    <td class="price-col">${{ c.wish_product.price }}</td>
+                                    {% endif %}
+                                    <td class="remove-col"><a href="{% url 'delete_wish_list' c.wish_product.pk %}" class="btn-remove"><i class="icon-close"></i></a></td>
+                                </tr>
+                                {% endfor %}
+                                    
+
+                            </tbody>
+                        </table><!-- End .table table-wishlist -->
+                    </div><!-- End .col-lg-9 -->
+
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+ {% endblock content %}
+    

@@ -369,3 +369,81 @@ def order_details(request,pk):
 
         }
     return render(request, 'store/order-details.html',context)
+
+
+@login_required
+def add_to_wishlist(request,pk):
+    products = get_object_or_404(Product, pk=pk)
+    wish_product, created = WhishLIst.objects.get_or_create(wish_product=products, pk=products.pk, user=request.user)
+    messages.info(request, "This Product add your wish list")
+    return redirect('home')
+
+
+def wish_list(request):
+    wish_product = WhishLIst.objects.filter(user=request.user)
+    context={
+        'wish_product': wish_product
+    }
+    return render(request, 'store/wishlist.html', context)
+
+def delete_wish_list(request, pk):
+    wish_product = WhishLIst.objects.filter(user=request.user, pk=pk)
+    wish_product.delete()
+    messages.info(request, "this product delete from your wish list")
+    return redirect('wish_list')
+
+
+
+#banner
+from .decorators import daseboard_required
+
+@login_required
+@daseboard_required
+def banner_list(request):
+    banner = Banner.objects.all()
+    context={
+        'banner':banner
+    }
+    return render(request, 'store/dashboard.html', context)
+
+@login_required
+@daseboard_required
+def banner_add(request):
+    if request.method == 'POST':
+        form=BannerAddForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'successfully add your new banner')
+            return redirect('banner_list')
+    else:
+        form =BannerAddForm()
+    return render(request,'store/banner-add.html',{'form':form})
+
+
+@login_required
+@daseboard_required
+def banner_update(request,pk):
+    banner =Banner.objects.get(pk=pk)
+    form =BannerAddForm(request.POST,request.FILES,instance=banner)
+    if request.method == 'POST':
+        form = BannerAddForm(request.POST,request.FILES,instance=banner)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully update banner')
+            return redirect('banner_list')
+    else:
+        form =BannerAddForm(instance=banner)
+    context={
+        'banner':banner,
+        'form':form,
+    }
+    return render(request, 'store/banner-add.html',context)
+
+@login_required
+@daseboard_required
+def banner_delete(request, pk):
+    banner = Banner.objects.get(pk=pk)
+    banner.delete()
+    messages.success(request, 'Successfully delete your post')
+    return redirect('banner_list')
+

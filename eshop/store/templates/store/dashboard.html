@@ -1,0 +1,44 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<div class="page-content">
+    <div class="cart">
+        <div class="container">
+            <div class="row">
+                <a href="{% url 'banner_add' %}">banner Add Form</a>
+                <div class="col-lg-9">
+                    <table class="table table-cart table-mobile">
+                       <h3>Banner List</h3>
+                        <thead>
+                            <tr>
+                                <th>Banner Title</th>
+                                <th>Image</th>
+                                <th>Http Link</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>                        
+                            {% for c in banner %}
+                            <tr>
+                                <td>{{ c.title }}</td>
+                                <td><img src="{{ c.image.url }}" alt="" style="height: 40px;"></td>
+                                <td>{{ c.http_link }}</td>
+                                <td>
+                                    <a href="{% url 'banner_edit' c.pk %}">edit</a>
+                                    <a href="{% url 'banner_delete' c.pk %}">delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table><!-- End .table table-wishlist -->
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .cart -->
+</div><!-- End .page-content -->
+ 
+
+{% endblock content %}
+    
